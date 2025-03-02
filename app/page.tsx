@@ -75,7 +75,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center gap-4 md:flex-row md:gap-6">
             <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-              © {new Date().getFullYear()} BookRater. All rights reserved.
+              © {new Date().getFullYear()} ❤️ Racheal-stack. All rights reserved.
             </p>
           </div>
         </div>
