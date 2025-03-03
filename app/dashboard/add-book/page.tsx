@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { bookSchema } from "@/schema/addBookSchema";
 import { z } from "zod";
+import { toast } from "sonner";
 
 const genres = [
   "Fiction",
@@ -56,7 +57,6 @@ export default function AddBookPage() {
         throw new Error("You must be logged in to add a book");
       }
 
-      // Validate input using Zod
       const parsedData = bookSchema.parse({
         title,
         author,
@@ -65,10 +65,10 @@ export default function AddBookPage() {
         userId: user.id,
       });
 
-      // Add book if validation passes
       addBook(parsedData);
 
       setSuccess(true);
+      toast.success("Added book successfully ")
       setTitle("");
       setAuthor("");
       setGenre(genres[0]);
@@ -79,11 +79,12 @@ export default function AddBookPage() {
       }, 1500);
     } catch (err: any) {
       if (err instanceof z.ZodError) {
-        setError(err.errors[0].message); // Show the first validation error
+        setError(err.errors[0].message); 
       } else {
         setError(err.message || "Failed to add book");
+        toast.error(err.message || "Failed to add book");
       }
-      console.error(err);
+      toast.error(err);
     }
   };
 
@@ -103,11 +104,11 @@ export default function AddBookPage() {
           </CardHeader>
           <CardContent>
             <form id="add-book-form" onSubmit={handleSubmit} className="space-y-4">
-              {error && (
+              {/* {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
-              )}
+              )} */}
 
               {success && (
                 <Alert>
