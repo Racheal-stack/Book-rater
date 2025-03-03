@@ -18,7 +18,7 @@ reading history and discover patterns in their reading habits.
 
 - **Book Management**
 
-- Add books with title, genre, and personal rating
+- Add books with title, author, genre, and personal rating
 - Delete books from your collection
 - Persistent storage of your book data
 
@@ -77,7 +77,7 @@ reading history and discover patterns in their reading habits.
 1. Clone the repository:
 
 ```shellscript
-git clone https://github.com/yourusername/book-rater.git
+git clone https://github.com/Racheal-stack/book-rater.git
 cd book-rater
 ```
 
@@ -116,7 +116,7 @@ yarn dev
 
 1. Log in to your account
 2. Navigate to the "Add Book" page from the dashboard
-3. Enter the book title, select a genre, and set your rating (1-10)
+3. Enter the book title, enter the book author, select a genre, and set your rating (1-10)
 4. Click "Add Book" to save to your collection
 
 
@@ -176,10 +176,6 @@ BookRater currently uses the browser's localStorage for data persistence. This m
 - **Export/Import**: Export your book collection data or import from other services
 - **Dark Mode**: Toggle between light and dark themes
 
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 
