@@ -5,8 +5,6 @@ TypeScript, and Tailwind CSS, this application provides a clean and intuitive in
 reading history and discover patterns in their reading habits.
 
 
-Thought for 2 seconds### BookRater - Personal Book Rating System
-
 BookRater is a web application that allows users to track, rate, and manage their personal book collection. Built with Next.js,
 TypeScript, and Tailwind CSS, this application provides a clean and intuitive interface for book enthusiasts to maintain their
 reading history and discover patterns in their reading habits.
