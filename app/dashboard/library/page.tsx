@@ -83,6 +83,7 @@ export default function LibraryPage() {
               <Card key={book.id}>
                 <CardHeader className="pb-2">
                   <CardTitle className="line-clamp-1">{book.title}</CardTitle>
+                  <CardDescription>{book.author}</CardDescription>
                   <CardDescription>{book.genre}</CardDescription>
                 </CardHeader>
                 <CardContent>

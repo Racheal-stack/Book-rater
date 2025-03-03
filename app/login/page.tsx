@@ -12,6 +12,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { BookOpen } from "lucide-react"
+import { loginSchema } from "@/schema/loginSchema"
+import { toast } from "sonner"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -21,21 +23,36 @@ export default function LoginPage() {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-
+    e.preventDefault();
+    setError("");
+  
+    const formData = { email, password };
+  
+    const result = loginSchema.safeParse(formData);
+    if (!result.success) {
+      const errorMessage = result.error.errors[0].message;
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return;
+    }
+  
     try {
-      const success = await login(email, password)
+      const success = await login(email, password);
       if (success) {
-        router.push("/dashboard")
+        toast.success("Logged in successfully!");
+        router.push("/dashboard");
       } else {
-        setError("Invalid email or password")
+        const errorMessage = "Invalid email or password";
+        setError(errorMessage);
+        toast.error(errorMessage);
       }
     } catch (err) {
-      setError("An error occurred during login")
-      console.error(err)
+      const errorMessage = "An error occurred during login";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      console.error(err);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900">

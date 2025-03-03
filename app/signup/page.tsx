@@ -12,6 +12,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { BookOpen } from "lucide-react"
+import { signupSchema } from "@/schema/signupSchema"
+import { toast } from "sonner"
 
 export default function SignupPage() {
   const [name, setName] = useState("")
@@ -23,26 +25,45 @@ export default function SignupPage() {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match")
-      return
+    e.preventDefault();
+    setError("");
+    
+    console.log("Form submission started");
+    
+    const formData = { name, email, password, confirmPassword };
+    const result = signupSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const errorMessages = result.error.errors.map(err => err.message).join(", ");
+      setError(errorMessages);
+      console.log("Validation failed, showing toast:", errorMessages);
+      toast.error(errorMessages); 
+      return;
     }
-
+    
+    console.log("Validation passed, proceeding with signup");
+    
     try {
-      const success = await signup(email, password, name)
+      const success = await signup(email, password, name);
       if (success) {
-        router.push("/dashboard")
+        console.log("Signup successful, showing success toast");
+        toast.success("Account created successfully! 🎉");
+        router.push("/dashboard");
       } else {
-        setError("Failed to create account")
+        setError("Failed to create account");
+        console.log("Signup failed, showing error toast");
+        toast.error("email already exists");
       }
     } catch (err: any) {
-      setError(err.message || "An error occurred during signup")
-      console.error(err)
+      const errorMessage = err.message || "An error occurred during signup";
+      setError(errorMessage);
+      console.log("Signup error, showing toast:", errorMessage);
+      toast.error(errorMessage);
+      console.error(err);
     }
-  }
+  };
+  
+  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900">
@@ -61,11 +82,11 @@ export default function SignupPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
+              {/* {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
-              )}
+              )} */}
 
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
